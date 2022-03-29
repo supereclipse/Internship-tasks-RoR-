@@ -1,8 +1,14 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: %i[ show edit update destroy ]
 
+  # p-17
   def approve
     render json: params
+  end
+
+  # p-18
+  def calc 
+    render plain: "#{rand(100)}" 
   end
 
   # GET /orders or /orders.json

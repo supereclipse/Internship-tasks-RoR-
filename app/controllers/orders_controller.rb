@@ -11,6 +11,12 @@ class OrdersController < ApplicationController
     render plain: "#{rand(100)}" 
   end
 
+  # p-19
+  def first
+    @order = Order.first
+    render :show
+  end
+
   # GET /orders or /orders.json
   def index
     @orders = Order.all

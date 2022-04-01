@@ -1,0 +1,5 @@
+<%- headers = ['id', 'name', 'status', 'cost'] -%>
+  <%= CSV.generate_line headers %>
+  <%- @orders.each do |order| -%>
+  <%= CSV.generate_line([order.id, order.name, order.status, order.cost]) -%>
+<%- end -%>

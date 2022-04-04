@@ -19,6 +19,7 @@ class LoginService
 
   def modify_session
     session[:login] = params[:login]
+    session[:balance] ||= 100_000
   end
 
   def message(check_password)

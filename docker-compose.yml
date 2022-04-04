@@ -8,3 +8,10 @@ services:
       - .:/usr/src
     ports:      
       - "3000:3000"
+
+  sinatra_server:
+    build: hw4/
+    command: ruby ./lib/sinatra_server.rb
+    ports:
+      - 5678:5678
+    

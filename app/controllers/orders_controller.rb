@@ -2,6 +2,8 @@ require 'csv'
 
 class OrdersController < ApplicationController
   before_action :set_order, only: %i[show edit update destroy]
+  after_create :sum_cost
+
 
   # p-17
   def approve
@@ -19,9 +21,29 @@ class OrdersController < ApplicationController
     render :show
   end
 
+  # p-31
+  def sum_cost
+    prices = {sas: 100, sata: 200, ssd: 300, ram:150, cpu: 1000}
+    cost = 0
+    (0...@order.options.length).step(2).each do |i|
+      cost += prices[i] * @order.options[i+1]
+    end
+    @order.cost = cost
+  end
+
   # GET /orders or /orders.json
   def index
-    @orders = Order.all
+    @orders = []
+    Order.eager_load(:networks,:tags).each do |order| 
+      @orders << {
+        name: order.name,
+        created_at: order.created_at,
+        networks_count: order.networks.length,
+        tags: order.tags.map {|tag| {id: tag.id, name: tag.name}}
+      }
+    end
+
+    render json: { orders: @orders }
   end
 
   # GET /orders/1 or /orders/1.json

@@ -1,25 +1,19 @@
 require 'net/http'
 require 'json'
-require "active_support/concern"
-
+require 'active_support/concern'
 
 class OrderService
-  # include ActionController::Rescue
-  # extend ActiveSupport::Concern
   attr_reader :params, :session
 
   def initialize(params, session)
     @params = params
     @session = session
-    @cost = 0
   end
 
   def check
     check_session
     check_config(parse_configs_from_site)
-
     cost = get_cost_from_sinatra_server
-
     check_balance_cost_diff(cost)
 
     # If all checks raised no exceptions than return:
@@ -29,6 +23,14 @@ class OrderService
       balance: session[:balance],
       balance_after_transaction: session[:balance] - cost
     }
+
+    # If one of the checks fails
+  rescue RuntimeError => e
+    [{ result: false, error: e.message }, :not_acceptable]
+  rescue IndexError => e
+    [{ result: false, error: e.message }, :unauthorized]
+  rescue SocketError
+    [{ result: false, error: 'Unable to connect' }, :service_unavailable]
   end
 
   private

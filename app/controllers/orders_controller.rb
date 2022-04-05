@@ -1,24 +1,12 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: %i[ show edit update destroy ]
 
-  # Rescues for HW6
-  rescue_from RuntimeError do |exception|
-    render json: { result: false, error: exception.message }, status: :not_acceptable
-  end
-
-  rescue_from IndexError do |exception|
-    render json: { result: false, error: exception.message }, status: :unauthorized
-  end
-
-  rescue_from SocketError do
-    render json: { result: false, error: 'Unable to connect' }, status: :service_unavailable
-  end
-
   # HW 6
   # URL to check http://localhost:3000/check?os=linux&cpu=1&ram=16&hdd_type=sata&hdd_capacity=20
   def check
-    # session[:balance] = 100000
-    render json: OrderService.new(params, session).check
+    # Recieving and rendering json and status from method check
+    json, status = OrderService.new(params, session).check
+    render json: json, status: status
   end
 
   # p-17

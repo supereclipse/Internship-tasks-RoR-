@@ -2,7 +2,7 @@ require 'csv'
 
 class OrdersController < ApplicationController
   before_action :set_order, only: %i[show edit update destroy]
-  after_create :sum_cost
+  #after_create :sum_cost
 
 
   # p-17
@@ -32,18 +32,11 @@ class OrdersController < ApplicationController
   end
 
   # GET /orders or /orders.json
+  # p-32
   def index
-    @orders = []
-    Order.eager_load(:networks,:tags).each do |order| 
-      @orders << {
-        name: order.name,
-        created_at: order.created_at,
-        networks_count: order.networks.length,
-        tags: order.tags.map {|tag| {id: tag.id, name: tag.name}}
-      }
-    end
-
-    render json: { orders: @orders }
+    per_page = 30 
+    per_page = params[:per_page].to_i if params[:per_page]
+    @orders = Order.limit(per_page).offset(per_page * params[:page].to_i).order('id DESC')
   end
 
   # GET /orders/1 or /orders/1.json

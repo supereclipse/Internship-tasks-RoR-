@@ -4,9 +4,15 @@ class OrdersController < ApplicationController
   # HW 6
   # URL to check http://localhost:3000/check?os=linux&cpu=1&ram=16&hdd_type=sata&hdd_capacity=20
   def check
+    # Session Check
+    raise IndexError, 'Invalid session' if !session[:login] || !session[:balance]
+
     # Recieving and rendering json and status from method check
     json, status = OrderService.new(params, session).check
     render json: json, status: status
+
+  rescue IndexError => e
+    render json: { result: false, error: e.message }, status: :unauthorized
   end
 
   # p-17

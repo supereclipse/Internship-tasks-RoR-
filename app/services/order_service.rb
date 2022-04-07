@@ -1,6 +1,5 @@
 require 'net/http'
 require 'json'
-require 'active_support/concern'
 
 class OrderService
   attr_reader :params, :session
@@ -10,8 +9,10 @@ class OrderService
     @session = session
   end
 
+  URI_SINATRA = 'http://sinatra_server:5678/vmcost'.freeze
+  URI_POSS_ORD = 'http://possible_orders.srv.w55.ru/'.freeze
+
   def check
-    check_session
     check_config(parse_configs_from_site)
     cost = get_cost_from_sinatra_server
     check_balance_cost_diff(cost)
@@ -27,36 +28,35 @@ class OrderService
     # If one of the checks fails
   rescue RuntimeError => e
     [{ result: false, error: e.message }, :not_acceptable]
-  rescue IndexError => e
-    [{ result: false, error: e.message }, :unauthorized]
   rescue SocketError
-    [{ result: false, error: 'Unable to connect' }, :service_unavailable]
+    [{ result: false, error: 'Unable to connect to external services' }, :service_unavailable]
   end
 
   private
-
-  def check_session
-    raise  IndexError, 'Invalid session' if !session[:login] || !session[:balance]
-  end
 
   def check_balance_cost_diff(cost)
     raise 'Insufficient funds' if session[:balance] < cost
   end
 
   def get_cost_from_sinatra_server
-    uri = URI('http://sinatra_server:5678/vmcost')
+    # uri = URI('http://httpstat.us/526')
+    uri = URI(URI_SINATRA)
     d_params = { cpu: params[:cpu], ram: params[:ram], hdd_type: params[:hdd_type],
                  hdd_capacity: params[:hdd_capacity] }
 
     uri.query = URI.encode_www_form(d_params)
     res = Net::HTTP.get_response(uri)
 
+    raise SocketError if (500..526).include?(res.code.to_i)
+
     res.body.match(/^[^\d]*(\d+)/)[1].to_i
   end
 
   def parse_configs_from_site
-    uri = URI('http://possible_orders.srv.w55.ru/')
+    uri = URI(URI_POSS_ORD)
     res = Net::HTTP.get_response(uri)
+
+    raise SocketError if (500..526).include?(res.code.to_i)
 
     JSON.parse(res.body)
   end

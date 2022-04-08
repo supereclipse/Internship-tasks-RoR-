@@ -1,0 +1,2 @@
+module HddsHelper
+end

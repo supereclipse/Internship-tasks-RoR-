@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :hdds
+  resources :vms
+  resources :projects
   # Routes для практик
   namespace :admin do
     root 'welcome#index'

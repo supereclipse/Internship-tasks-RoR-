@@ -22,4 +22,6 @@ Rails.application.routes.draw do
 
   # HW 6
   get 'check', to: 'orders#check'
+
+  resources :vms
 end

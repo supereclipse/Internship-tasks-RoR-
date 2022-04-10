@@ -12,7 +12,6 @@ class OrdersController < ApplicationController
     # Recieving and rendering json and status from method check
     json, status = OrderService.new(params, session).check
     render json: json, status: status
-
   rescue IndexError => e
     render json: { result: false, error: e.message }, status: :unauthorized
   end

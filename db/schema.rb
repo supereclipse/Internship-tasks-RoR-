@@ -10,14 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_08_163034) do
-
-  create_table "hdds", force: :cascade do |t|
-    t.string "hdd_type"
-    t.integer "size"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
+ActiveRecord::Schema.define(version: 2022_04_04_173922) do
 
   create_table "networks", force: :cascade do |t|
     t.string "name"
@@ -54,13 +47,6 @@ ActiveRecord::Schema.define(version: 2022_04_08_163034) do
     t.index ["user_id"], name: "index_passport_data_on_user_id"
   end
 
-  create_table "projects", force: :cascade do |t|
-    t.string "name"
-    t.string "state"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -71,14 +57,6 @@ ActiveRecord::Schema.define(version: 2022_04_08_163034) do
     t.string "first_name"
     t.string "last_name"
     t.integer "balance"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "vms", force: :cascade do |t|
-    t.string "name"
-    t.integer "cpu"
-    t.integer "ram"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

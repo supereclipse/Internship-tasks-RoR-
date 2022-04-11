@@ -3,6 +3,10 @@ class GrapeApi
     format :json
 
     namespace :vms do
+      desc 'Список ВМ',
+           success: GrapeApi::Entities::Vm,
+           is_array: true
+
       params do
         optional :cpu, type: Integer
       end
@@ -14,6 +18,10 @@ class GrapeApi
       end
 
       route_param :id, type: Integer do
+        desc 'Просмотр ВМ',
+             success: GrapeApi::Entities::Vm,
+             failure: [{ code: 404, message: 'ВМ не найдена' }]
+
         params do
           optional :detail, type: Boolean
         end

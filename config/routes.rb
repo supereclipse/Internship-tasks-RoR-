@@ -27,4 +27,5 @@ Rails.application.routes.draw do
   resources :vms
 
   mount GrapeApi => '/api'
+  mount GrapeSwaggerRails::Engine => '/swagger'
 end

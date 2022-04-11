@@ -3,6 +3,10 @@ class GrapeApi
     format :json
 
     namespace :projects do
+      desc 'Список Project',
+           success: GrapeApi::Entities::Project,
+           is_array: true
+
       params do
         optional :state, type: Array[String]
       end
@@ -16,6 +20,10 @@ class GrapeApi
         end
         present projects, with: GrapeApi::Entities::Project
       end
+
+      desc 'Create project',
+           success: [{ code: 200, message: 'Project created' }],
+           failure: [{ code: 404, message: 'Project не найден' }]
 
       params do
         requires :name, type: String
@@ -31,11 +39,19 @@ class GrapeApi
       end
 
       route_param :id, type: Integer do
+        desc 'Просмотр Project',
+             success: GrapeApi::Entities::Project,
+             failure: [{ code: 404, message: 'Project не найден' }]
+
         get do
           project = Project.find_by_id(params[:id])
           error!({ message: 'Project не найден' }, 404) unless project
           present project
         end
+
+        desc 'Delete project',
+             success: [{ code: 204, message: 'Project deleted' }],
+             failure: [{ code: 404, message: 'Project не найден' }]
 
         delete do
           project = Project.find_by_id(params[:id])

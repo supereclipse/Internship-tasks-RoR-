@@ -23,5 +23,8 @@ Rails.application.routes.draw do
   # HW 6
   get 'check', to: 'orders#check'
 
+  # Praktiki po grape api
   resources :vms
+
+  mount GrapeApi => '/api'
 end

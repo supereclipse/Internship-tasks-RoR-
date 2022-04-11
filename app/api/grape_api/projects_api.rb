@@ -14,7 +14,7 @@ class GrapeApi
                                                                   "state_#{x}"
                                                                 end)
         end
-        present projects
+        present projects, with: GrapeApi::Entities::Project
       end
 
       params do

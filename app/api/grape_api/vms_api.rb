@@ -10,14 +10,18 @@ class GrapeApi
       get do
         vms = Vm.all
         vms = vms.where('cpu >= :cpu', cpu: params[:cpu]) if params[:cpu].present?
-        present vms
+        present vms, with: GrapeApi::Entities::Vm
       end
 
       route_param :id, type: Integer do
+        params do
+          optional :detail, type: Boolean
+        end
+
         get do
           vm = Vm.find_by_id(params[:id])
           error!({ message: 'ВМ не найдена' }, 404) unless vm
-          present vm
+          present vm, with: GrapeApi::Entities::Vm, detail: params[:detail]
         end
 
         # curl -X DELETE http://localhost:3000/api/vms/14

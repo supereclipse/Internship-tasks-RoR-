@@ -10,93 +10,92 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_11_165353) do
-
-  create_table "groups", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+ActiveRecord::Schema.define(version: 20_220_411_165_353) do
+  create_table 'groups', force: :cascade do |t|
+    t.string 'name'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
-  create_table "hdds", force: :cascade do |t|
-    t.string "hdd_type"
-    t.integer "size"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "vm_id", null: false
-    t.index ["vm_id"], name: "index_hdds_on_vm_id"
+  create_table 'hdds', force: :cascade do |t|
+    t.string 'hdd_type'
+    t.integer 'size'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.integer 'vm_id', null: false
+    t.index ['vm_id'], name: 'index_hdds_on_vm_id'
   end
 
-  create_table "networks", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'networks', force: :cascade do |t|
+    t.string 'name'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
-  create_table "networks_orders", id: false, force: :cascade do |t|
-    t.integer "order_id", null: false
-    t.integer "network_id", null: false
+  create_table 'networks_orders', id: false, force: :cascade do |t|
+    t.integer 'order_id', null: false
+    t.integer 'network_id', null: false
   end
 
-  create_table "orders", force: :cascade do |t|
-    t.string "name"
-    t.integer "status"
-    t.integer "cost"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "user_id", null: false
-    t.index ["user_id"], name: "index_orders_on_user_id"
+  create_table 'orders', force: :cascade do |t|
+    t.string 'name'
+    t.integer 'status'
+    t.integer 'cost'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.integer 'user_id', null: false
+    t.index ['user_id'], name: 'index_orders_on_user_id'
   end
 
-  create_table "orders_tags", id: false, force: :cascade do |t|
-    t.integer "order_id", null: false
-    t.integer "tag_id", null: false
+  create_table 'orders_tags', id: false, force: :cascade do |t|
+    t.integer 'order_id', null: false
+    t.integer 'tag_id', null: false
   end
 
-  create_table "passport_data", force: :cascade do |t|
-    t.integer "series"
-    t.integer "number"
-    t.integer "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_passport_data_on_user_id"
+  create_table 'passport_data', force: :cascade do |t|
+    t.integer 'series'
+    t.integer 'number'
+    t.integer 'user_id', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['user_id'], name: 'index_passport_data_on_user_id'
   end
 
-  create_table "projects", force: :cascade do |t|
-    t.string "name"
-    t.string "state"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'projects', force: :cascade do |t|
+    t.string 'name'
+    t.string 'state'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
-  create_table "projects_vms", id: false, force: :cascade do |t|
-    t.integer "project_id", null: false
-    t.integer "vm_id", null: false
+  create_table 'projects_vms', id: false, force: :cascade do |t|
+    t.integer 'project_id', null: false
+    t.integer 'vm_id', null: false
   end
 
-  create_table "tags", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'tags', force: :cascade do |t|
+    t.string 'name'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.integer "balance"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'users', force: :cascade do |t|
+    t.string 'first_name'
+    t.string 'last_name'
+    t.integer 'balance'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
-  create_table "vms", force: :cascade do |t|
-    t.string "name"
-    t.integer "cpu"
-    t.integer "ram"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'vms', force: :cascade do |t|
+    t.string 'name'
+    t.integer 'cpu'
+    t.integer 'ram'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
-  add_foreign_key "hdds", "vms"
-  add_foreign_key "orders", "users"
-  add_foreign_key "passport_data", "users"
+  add_foreign_key 'hdds', 'vms'
+  add_foreign_key 'orders', 'users'
+  add_foreign_key 'passport_data', 'users'
 end

@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe GroupsController, type: :controller do
-
   describe 'GET #index' do
-
     before(:all) do
       create_list(:group, 5)
     end
@@ -39,8 +37,7 @@ RSpec.describe GroupsController, type: :controller do
     end
   end
 
-  describe "GET #show" do
-
+  describe 'GET #show' do
     before(:each) do
       create_list(:group, 1, id: 1)
     end
@@ -50,19 +47,18 @@ RSpec.describe GroupsController, type: :controller do
     end
 
     it 'returns 404 if group not found' do
-      get :show, params: {id: 10000} 
+      get :show, params: { id: 10_000 }
       expect(response.status).to eq(404)
     end
 
     it 'returns right attributes' do
-      get :show, params: {id: 1} 
+      get :show, params: { id: 1 }
       group = JSON.parse(response.body)
       expect(group.keys).to contain_exactly('id', 'name')
     end
   end
 
   describe 'POST #create' do
-
     before(:each) do
       Group.destroy_all
     end
@@ -83,18 +79,17 @@ RSpec.describe GroupsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-
     before(:each) do
       create_list(:group, 1, id: 1)
     end
 
     it 'deletes a group' do
-      delete :destroy, params: {id: 1}
+      delete :destroy, params: { id: 1 }
       expect(Group.first).to be_nil
     end
 
     it 'returns empty answer with 204 code' do
-      delete :destroy, params: {id: 1}
+      delete :destroy, params: { id: 1 }
       expect(response.body).to be_empty
       expect(response.status).to eq(204)
     end

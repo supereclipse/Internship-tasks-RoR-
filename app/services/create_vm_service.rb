@@ -1,6 +1,7 @@
 class CreateVmService
   def self.call
     return { error: 'invalid vm params' } unless CheckVmService.call
+
     NotifierService.call
     create_vm
   end

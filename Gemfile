@@ -29,12 +29,12 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
   # praktiki po testam
-  gem 'rspec-rails', '~> 4.1'
-  gem 'factory_bot_rails'
-  gem 'webmock'
-  gem 'rubocop', require: false
   gem 'bundler-audit'
+  gem 'factory_bot_rails'
+  gem 'rspec-rails', '~> 4.1'
+  gem 'rubocop', require: false
   gem 'simplecov', require: false
+  gem 'webmock'
 end
 
 group :development do

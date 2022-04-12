@@ -1,10 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe CreateVmService do
-
   before do
-    stub_request(:any, 'https://cloud.com/vms').
-      to_return(body: { vm_id: 'vm1' }.to_json)
+    stub_request(:any, 'https://cloud.com/vms')
+      .to_return(body: { vm_id: 'vm1' }.to_json)
   end
 
   it 'create vm' do

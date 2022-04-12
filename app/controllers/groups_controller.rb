@@ -8,6 +8,7 @@ class GroupsController < ApplicationController
   def show
     group = Group.find_by_id(params[:id])
     return head :not_found unless group
+
     render json: { id: group.id, name: group.name }
   end
 
@@ -18,7 +19,7 @@ class GroupsController < ApplicationController
 
   def destroy
     Group.find_by_id(params[:id]).destroy
-    return head :no_content
+    head :no_content
   end
 
   private

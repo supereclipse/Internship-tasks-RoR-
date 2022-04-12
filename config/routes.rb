@@ -28,4 +28,6 @@ Rails.application.routes.draw do
 
   mount GrapeApi => '/api'
   mount GrapeSwaggerRails::Engine => '/swagger'
+
+  resources :groups
 end

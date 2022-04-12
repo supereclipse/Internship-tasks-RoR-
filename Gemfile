@@ -27,6 +27,14 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+
+  # praktiki po testam
+  gem 'rspec-rails', '~> 4.1'
+  gem 'factory_bot_rails'
+  gem 'webmock'
+  gem 'rubocop', require: false
+  gem 'bundler-audit'
+  gem 'simplecov', require: false
 end
 
 group :development do
@@ -49,3 +57,6 @@ gem 'grape-entity'
 gem 'grape-swagger'
 gem 'grape-swagger-entity'
 gem 'grape-swagger-rails'
+
+# praktika po testam
+gem 'httpclient'

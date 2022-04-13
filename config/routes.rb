@@ -30,4 +30,7 @@ Rails.application.routes.draw do
   mount GrapeSwaggerRails::Engine => '/swagger'
 
   resources :groups
+
+  # Praktika po async
+  mount Sidekiq::Web => '/sidekiq'
 end

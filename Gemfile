@@ -60,3 +60,8 @@ gem 'grape-swagger-rails'
 
 # praktika po testam
 gem 'httpclient'
+
+# praktika po asinhron
+gem 'bunny'
+gem 'sidekiq', require: ['sidekiq', 'sidekiq/web']
+gem 'redis'

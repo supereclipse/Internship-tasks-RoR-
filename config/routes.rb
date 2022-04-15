@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'reports/update'
+  get 'reports/index'
   # Routes для практик
   namespace :admin do
     root 'welcome#index'
@@ -33,4 +35,9 @@ Rails.application.routes.draw do
 
   # Praktika po async
   mount Sidekiq::Web => '/sidekiq'
+
+  # HW 8
+  # get 'reports', to: 'reports#index'
+  # put 'reports', to: 'reports#update'
+  resources :reports
 end

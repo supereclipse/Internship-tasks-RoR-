@@ -63,5 +63,6 @@ gem 'httpclient'
 
 # praktika po asinhron
 gem 'bunny'
+gem 'redis' 
 gem 'sidekiq', require: ['sidekiq', 'sidekiq/web']
-gem 'redis'
+

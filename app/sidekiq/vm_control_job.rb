@@ -1,7 +1,7 @@
 class VmControlJob
   include Sidekiq::Job
 
-  def perform(*args)
-    StopVmService.call(order_id)
+  def perform(*_args)
+    StopVmService.call('jjj')
   end
 end

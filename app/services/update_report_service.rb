@@ -1,22 +1,15 @@
 require './bin/hw1/lib/main'
+require 'json'
 
 # HW 8 part 1
 class UpdateReportService
-
-  def self.update(depth)
-    depth = depth.to_i
-
-    # Getting report from HW1
+  def self.update(report_id)
+    # Getting report instance from HW1
     report_hw = Main.new.report
 
-    # Clearing values from previous report
-    Report.all.destroy_all
+    report = Report.find_by_id(report_id)
 
-    # Inserting values from new report
-    report_hw.expensive(depth.to_i).each { |x| Report.create(vmname: x[0], result: x[1], reptype: 'expensive') }
-    report_hw.cheap(depth.to_i).each { |x| Report.create(vmname: x[0], result: x[1], reptype: 'cheap') }
-    report_hw.most_capacity_of_type(depth.to_i, 'cpu').each { |x| Report.create(vmname: x[0], result: x[1], reptype: 'most_cap') }
-    report_hw.e_volume_amount(depth.to_i).each { |x| Report.create(vmname: x[0], result: x[1], reptype: 'vol_am') }
-    report_hw.e_volume_volume(depth.to_i).each { |x| Report.create(vmname: x[0], result: x[1], reptype: 'vol_vol') }
+    # Updating "result" field with required report from hw1
+    report.update(result: JSON.generate(report_hw.send(report.reptype, report.depth)))
   end
 end

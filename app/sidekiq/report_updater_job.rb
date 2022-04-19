@@ -1,7 +1,7 @@
 class ReportUpdaterJob
   include Sidekiq::Job
 
-  def perform(depth)
-    UpdateReportService.update(depth)
+  def perform(report_id)
+    UpdateReportService.update(report_id)
   end
 end

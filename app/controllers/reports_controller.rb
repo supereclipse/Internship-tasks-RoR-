@@ -1,27 +1,29 @@
 # HW 8 part 1
 class ReportsController < ApplicationController
+  # Temp line for testing with curl
   skip_before_action :verify_authenticity_token
-  before_action :require_depth, only: %i[update]
 
-  # curl -XPUT --data "depth=3" http://localhost:3000/reports/1
-  def update
-    ReportUpdaterJob.perform_async(params[:depth])
+  # curl -d '{"reptype":"expensive", "depth":10}' -H "Content-Type: application/json" -X POST http://localhost:3000/reports
+  # Creates a new report record with required "depth" and "reptype"
+  def create
+    report = Report.new(report_params)
+
+    if report.save
+      render plain: 'Report sucessfully created and queued for updating with latest data'
+
+      # Starts an async task of updating "result" field with report data from hw1
+      ReportUpdaterJob.perform_async(report.id)
+    else
+      render plain: 'Failed to create new report'
+    end
   end
 
   def index
     reports = Report.all
-
-    reports_list = {
-      expensive: reports.select(:vmname, :result).where(reptype: 'expensive'),
-      cheap: reports.select(:vmname, :result).where(reptype: 'cheap'),
-      most_cap: reports.select(:vmname, :result).where(reptype: 'most_cap'),
-      vol_am: reports.select(:vmname, :result).where(reptype: 'vol_am'),
-      vol_vol: reports.select(:vmname, :result).where(reptype: 'vol_vol')
-    }
-    render json: reports_list
+    render json: reports
   end
 
-  def require_depth
-    params.require(:depth)
+  def report_params
+    params.require(:report).permit(:reptype, :depth)
   end
 end

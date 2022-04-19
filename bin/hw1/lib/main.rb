@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './bin/hw1/lib/report'
+require './bin/hw1/lib/report_hw'
 require './bin/hw1/lib/report_presenter'
 
 class Main

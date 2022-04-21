@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  
   # Routes для практик
   namespace :admin do
     root 'welcome#index'

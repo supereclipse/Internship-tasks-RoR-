@@ -6,16 +6,14 @@ class ReportsController < ApplicationController
   # curl -d '{"reptype":"expensive", "depth":10}' -H "Content-Type: application/json" -X POST http://localhost:3000/reports
   # Creates a new report record with required "depth" and "reptype"
   def create
-    report = Report.new(report_params)
+    report = Report.create(report_params)
 
-    if report.save
-      render plain: 'Report sucessfully created and queued for updating with latest data'
+    # Starts an async task of updating "result" field with report data from hw1
+    ReportUpdaterJob.perform_async(report.id)
 
-      # Starts an async task of updating "result" field with report data from hw1
-      ReportUpdaterJob.perform_async(report.id)
-    else
-      render plain: 'Failed to create new report'
-    end
+    render json: { result: 'true' }
+  rescue ArgumentError => e
+    render json: { result: 'false', error: e.message }
   end
 
   def index

@@ -7,7 +7,7 @@ class UpdateReportService
     # Getting report instance from HW1
     report_hw = Main.new.report
 
-    report = Report.find_by_id(report_id)
+    report = Report.find(report_id)
 
     # Updating "result" field with required report from hw1
     report.update(result: JSON.generate(report_hw.send(report.reptype, report.depth)))

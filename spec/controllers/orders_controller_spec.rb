@@ -4,6 +4,7 @@ RSpec.describe OrdersController, type: :controller do
   describe 'GET #check' do
     context 'when user is authorized and params suite config' do
       let(:session) { { login: 'test', balance: 1_000_000 } }
+
       it 'returns a json with right attributes and 200 code' do
         allow_any_instance_of(OrderService).to receive(:check).and_return({
                                                                             return: true,

@@ -16,7 +16,6 @@ class ReportsController < ApplicationController
     else
       render json: { result: 'false', error: report.errors[:depth] }
     end
-
   rescue ArgumentError => e
     render json: { result: 'false', error: e.message }
   end

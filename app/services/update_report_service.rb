@@ -2,6 +2,7 @@ require './bin/hw1/lib/main'
 require 'json'
 
 # HW 8 part 1
+
 class UpdateReportService
   def self.update(report_id)
     # Getting report instance from HW1

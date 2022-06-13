@@ -1,0 +1,20 @@
+# p-24
+10.times{|i| Order.create(name: "vm_#{i}", cost: Random.rand(1000))}
+
+# p-25
+Order.where("name LIKE '%vm%'").destroy_all
+
+10.times{|i| Order.create(name: "vm_order_"+"#{i}".rjust(2,'0'), cost: Random.rand(1000))}
+
+names = []
+Order.all.find_each {|order| names = order.name if order.name.scan(/\d+/).map(&:to_i)[0]%2==0}
+Order.where(name: names).update_all(cost: Random.rand(2000..3000))
+
+# p-26
+Order.where("name LIKE '%____%'")
+
+Order.all.find_each {|order| puts "#{order.id} - #{order.name}" if order.cost > 500} || 
+# Or with select
+Order.select('id,name').where('cost>500')
+
+Order.find_by_cost(Order.maximum('cost'))

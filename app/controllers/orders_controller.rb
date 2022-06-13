@@ -1,5 +1,20 @@
+require 'csv'
+
 class OrdersController < ApplicationController
-  before_action :set_order, only: %i[ show edit update destroy ]
+  before_action :set_order, only: %i[show edit update destroy]
+
+  # HW 6
+  # URL to check http://localhost:3000/check?os=linux&cpu=1&ram=16&hdd_type=sata&hdd_capacity=20
+  def check
+    # Session Check
+    raise IndexError, 'Invalid session' if !session[:login] || !session[:balance]
+
+    # Recieving and rendering json and status from method check
+    json, status = OrderService.new(params, session).check
+    render json: json, status: status
+  rescue IndexError => e
+    render json: { result: false, error: e.message }, status: :unauthorized
+  end
 
   # p-17
   def approve
@@ -7,8 +22,8 @@ class OrdersController < ApplicationController
   end
 
   # p-18
-  def calc 
-    render plain: "#{rand(100)}" 
+  def calc
+    render plain: rand(100).to_s
   end
 
   # p-19
@@ -24,6 +39,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/1 or /orders/1.json
   def show
+    @orders = Order.all
   end
 
   # GET /orders/new
@@ -32,8 +48,7 @@ class OrdersController < ApplicationController
   end
 
   # GET /orders/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /orders or /orders.json
   def create
@@ -41,7 +56,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
+        format.html { redirect_to order_url(@order), notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -54,7 +69,7 @@ class OrdersController < ApplicationController
   def update
     respond_to do |format|
       if @order.update(order_params)
-        format.html { redirect_to order_url(@order), notice: "Order was successfully updated." }
+        format.html { redirect_to order_url(@order), notice: 'Order was successfully updated.' }
         format.json { render :show, status: :ok, location: @order }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -68,19 +83,20 @@ class OrdersController < ApplicationController
     @order.destroy
 
     respond_to do |format|
-      format.html { redirect_to orders_url, notice: "Order was successfully destroyed." }
+      format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def order_params
-      params.require(:order).permit(:name, :status, :cost)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order
+    @order = Order.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def order_params
+    params.require(:order).permit(:name, :status, :cost)
+  end
 end

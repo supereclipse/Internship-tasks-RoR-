@@ -1,0 +1,4 @@
+<%- headers = ['id', 'name', 'status', 'cost'] -%>
+<%= CSV.generate_line headers %>
+
+<%= CSV.generate_line([@order.id, @order.name, @order.status, @order.cost]) %>

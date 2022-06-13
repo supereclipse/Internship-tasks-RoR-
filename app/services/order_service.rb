@@ -14,8 +14,7 @@ class OrderService
 
   def check
     check_config(parse_configs_from_site)
-    cost = get_cost_from_sinatra_server
-    check_balance_cost_diff(cost)
+    check_balance_cost_diff(get_cost_from_sinatra_server)
 
     # If all checks raised no exceptions than return:
     {
@@ -39,7 +38,6 @@ class OrderService
   end
 
   def get_cost_from_sinatra_server
-    # uri = URI('http://httpstat.us/526')
     uri = URI(URI_SINATRA)
     d_params = { cpu: params[:cpu], ram: params[:ram], hdd_type: params[:hdd_type],
                  hdd_capacity: params[:hdd_capacity] }
